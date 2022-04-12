@@ -90,8 +90,10 @@ class CategorieController extends Controller
      * @param  \App\Models\Categorie  $categorie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categorie $categorie)
+    public function destroy($categorie)
     {
-        //
+        $categorie = Categorie::findOrFail($categorie);
+        $categorie->delete();
+        return redirect()->route('categories.index')->with('alert', 'la catégorie a été supprimée');
     }
 }

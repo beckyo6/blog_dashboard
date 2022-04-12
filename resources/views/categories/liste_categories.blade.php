@@ -13,6 +13,16 @@
                 <div class="card-header border-bottom">
                     <h6 class="m-0">Ajouter une catégorie</h6>
                 </div>
+                @if (session('success'))
+                    <div class="alert alert-success text-center msg" id="error">
+                        <strong>{{ session('success') }}</strong>
+                    </div>
+                @endif
+                @if (session('alert'))
+                    <div class="alert alert-success text-center msg" id="error">
+                        <strong>{{ session('alert') }}</strong>
+                    </div>
+                @endif
                 <div class="card-body p-0 pb-3 text-center">
                     <table class="table mb-0">
                         <thead class="bg-light">
@@ -25,29 +35,29 @@
                         </thead>
                         <tbody>
                             @if ($categories->isNotEmpty())
-                                        @foreach ($categories as $categorie)
-                                            <tr>
-                                                <td>PD-{{ $categorie->id }}</td>
-                                                <td>{{ $categorie->titre }}</td>
-                                                <td>
-                                                    <div class="btn-group" role="group" aria-label="Action Frais">
-                                                        <a href='{{ url("produits/$categorie->id/update") }}'
-                                                            class="btn btn-sm btn-primary">
-                                                            <i class="ti-pencil-alt">Modifier</i>
-                                                        </a>
-                                                        <a href='{{ url("categorie/$categorie->id/delete") }}'
-                                                            class="btn btn-sm btn-danger text-white">
-                                                            <i class="ti-trash">Supprimer</i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <div class="alert alert-info text-center" alt="alert">
-                                            Aucune catéorie existante
-                                        </div>
-                                    @endif
+                                @foreach ($categories as $categorie)
+                                    <tr>
+                                        <td>PD-{{ $categorie->id }}</td>
+                                        <td>{{ $categorie->titre }}</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Action Frais">
+                                                <a href='{{ url("produits/$categorie->id/update") }}'
+                                                    class="btn btn-sm btn-primary">
+                                                    <i class="ti-pencil-alt">Modifier</i>
+                                                </a>
+                                                <a href='{{ url("categorie/$categorie->id/delete") }}'
+                                                    class="btn btn-sm btn-danger text-white">
+                                                    <i class="ti-trash">Supprimer</i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <div class="alert alert-info text-center" alt="alert">
+                                    Aucune catéorie existante
+                                </div>
+                            @endif
 
                         </tbody>
                     </table>
