@@ -28,11 +28,23 @@
      <div class="nav-wrapper">
          <ul class="nav flex-column">
              <li class="nav-item">
-                 <a class="nav-link active" href="index.html">
+                 <a class="nav-link active" href="/">
                      <i class="material-icons">edit</i>
                      <span>Dashboard</span>
                  </a>
              </li>
+             <li class="nav-item">
+                <a class="nav-link " href="components-blog-posts.html">
+                    <i class="material-icons">vertical_split</i>
+                    <span>Catégories</span>
+                </a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link " href="{{ route('categorie')}}">
+                    <i class="material-icons">note_add</i>
+                    <span>Ajouter une Catégorie</span>
+               </a>
+            </li>
              <li class="nav-item">
                  <a class="nav-link " href="components-blog-posts.html">
                      <i class="material-icons">vertical_split</i>
