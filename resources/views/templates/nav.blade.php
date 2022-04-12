@@ -52,7 +52,7 @@
                  </a>
              </li>
              <li class="nav-item">
-                <a class="nav-link " href="add-new-post.html">
+                <a class="nav-link " href="{{ route('article')}}">
                      <i class="material-icons">note_add</i>
                      <span>Ajouter un article</span>
                 </a>

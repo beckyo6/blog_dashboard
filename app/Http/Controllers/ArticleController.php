@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -35,7 +36,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Categorie::all();
+
+        return view('articles.ajout_article', compact('categories'));
     }
 
     /**
