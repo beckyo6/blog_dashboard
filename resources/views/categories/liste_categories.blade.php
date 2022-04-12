@@ -41,13 +41,13 @@
                                         <td>{{ $categorie->titre }}</td>
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Action Frais">
-                                                <a href='{{ url("produits/$categorie->id/update") }}'
+                                                {{--<a href='{{ url("categorie/$categorie->id/edit") }}'
                                                     class="btn btn-sm btn-primary">
-                                                    <i class="ti-pencil-alt">Modifier</i>
-                                                </a>
+                                                    Modifier
+                                                </a>--}}
                                                 <a href='{{ url("categorie/$categorie->id/delete") }}'
                                                     class="btn btn-sm btn-danger text-white">
-                                                    <i class="ti-trash">Supprimer</i>
+                                                    Supprimer
                                                 </a>
                                             </div>
                                         </td>

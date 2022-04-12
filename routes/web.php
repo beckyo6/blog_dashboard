@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategorieController;
@@ -39,5 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('categorie/{id}/edit', [CategorieController::class, 'edit'])->name('categorie.edit');
     Route::post('categorie/{id}/update', [CategorieController::class, 'update'])->name('categorie.update');
+
+    Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
+
 
 });

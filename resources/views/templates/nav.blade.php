@@ -46,7 +46,7 @@
                </a>
             </li>
              <li class="nav-item">
-                 <a class="nav-link " href="components-blog-posts.html">
+                 <a class="nav-link " href="{{ route('articles.index')}}">
                      <i class="material-icons">vertical_split</i>
                      <span>Articles</span>
                  </a>
