@@ -1,0 +1,21 @@
+------------------------------------------
+    CREDITS
+------------------------------------------
+
+    - Bootstrap 4    -    https://getbootstrap.com
+
+    - Font Awesome   -    https://fontawesome.com
+
+    - Orion Icons    -    https://orioniconlibrary.com/
+
+    - Owl Carousel2  -    https://owlcarousel2.github.io/OwlCarousel2/
+
+
+
+------------------------------------------
+    IMAGES
+------------------------------------------
+
+    - All image credits go to www.pexels.com and available to use under their license.
+
+    - Logos & Brands  - https://www.freepik.com/
