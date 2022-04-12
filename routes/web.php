@@ -21,6 +21,8 @@ Route::post('login', [AuthController::class, 'login'])->name('login.post');
 
 Route::middleware('auth')->group(function () {
 
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
     Route::get('/', function () {
     return view('home');
     });

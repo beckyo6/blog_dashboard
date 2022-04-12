@@ -15,8 +15,8 @@
                     <i class="material-icons">&#xE7FD;</i> Profile
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" href="#">
-                    <i class="material-icons text-danger">&#xE879;</i> Logout </a>
+                <a class="dropdown-item text-danger" href="{{ route('logout') }}">
+                    <i class="material-icons text-danger">&#xE879;</i> Déconnexion </a>
             </div>
         </li>
     </ul>

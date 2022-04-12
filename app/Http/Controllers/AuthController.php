@@ -44,7 +44,11 @@ class AuthController extends Controller
         return redirect()->back()->withInput($request->only('email'))->withError('Les informations d\'identification fournies ne correspondent pas à nos enregistrements.');
     }
 
-
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect('/login')->withSuccess('Deconnection reussi! A la prochaine!');
+    }
 
     protected function verifyAuthorization()
     {
