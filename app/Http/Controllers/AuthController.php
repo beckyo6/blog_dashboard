@@ -59,4 +59,12 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+
+    public function getUser()
+    {
+        $user = User::where('id', auth()->user()->id)
+            ->first();
+
+        return view('auth.profil', compact('user'));
+    }
 }

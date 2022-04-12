@@ -8,15 +8,16 @@
             <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button"
                 aria-haspopup="true" aria-expanded="false">
                 <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar">
-                <span class="d-none d-md-inline-block">Sierra Brooks</span>
+                <span class="d-none d-md-inline-block">{{auth()->user()->name}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-small">
-                <a class="dropdown-item" href="user-profile-lite.html">
+                <a class="dropdown-item" href="{{ route('profil') }}">
                     <i class="material-icons">&#xE7FD;</i> Profile
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-danger" href="{{ route('logout') }}">
-                    <i class="material-icons text-danger">&#xE879;</i> Déconnexion </a>
+                    <i class="material-icons text-danger">&#xE879;</i> Déconnexion
+                </a>
             </div>
         </li>
     </ul>
