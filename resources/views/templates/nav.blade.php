@@ -34,7 +34,7 @@
                  </a>
              </li>
              <li class="nav-item">
-                <a class="nav-link " href="components-blog-posts.html">
+                <a class="nav-link " href="{{ route('categories.index')}}">
                     <i class="material-icons">vertical_split</i>
                     <span>Catégories</span>
                 </a>

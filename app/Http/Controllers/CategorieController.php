@@ -14,7 +14,9 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Categorie::all();
+
+        return view('categories.liste_categories', compact('categories'));
     }
 
     /**
