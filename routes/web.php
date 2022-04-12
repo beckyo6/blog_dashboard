@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,8 +13,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('login', [AuthController::class, 'form_login'])->name('login');
 
-Route::get('/', function () {
+Route::get('/signin', [AuthController::class, 'signin']); //to remove
+
+Route::post('login', [AuthController::class, 'login'])->name('login.post');
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/', function () {
     return view('home');
+    });
 });
-
