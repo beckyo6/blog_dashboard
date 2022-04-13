@@ -1,3 +1,10 @@
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('styles/quill.snow.min.css') }}">
+@endpush
+@push('scripts')
+    <script src="{{ asset('scripts/quill.min.js') }}"></script>
+    <script src="{{ asset('scripts/app/app-blog-new-post.1.1.0.js') }}"></script>
+@endpush
 @extends('templates.app')
 @section('content')
     <div class="page-header row no-gutters py-4">
@@ -31,9 +38,9 @@
                             <span class="d-flex mb-2">
                                 <i class="material-icons mr-1">flag</i>
                                 <strong class="mr-1">Status:</strong> Article
-                                {{--<a class="ml-auto" href="#">Edit</a>--}}
+                                {{-- <a class="ml-auto" href="#">Edit</a> --}}
                             </span>
-                            {{--<span class="d-flex mb-2">
+                            {{-- <span class="d-flex mb-2">
                                 <i class="material-icons mr-1">visibility</i>
                                 <strong class="mr-1">Visibility:</strong>
                                 <strong class="text-success">Public</strong>
@@ -48,12 +55,12 @@
                                 <i class="material-icons mr-1">score</i>
                                 <strong class="mr-1">Readability:</strong>
                                 <strong class="text-warning">Ok</strong>
-                            </span>--}}
+                            </span> --}}
                         </li>
                         <li class="list-group-item d-flex px-3">
-                            {{--<button class="btn btn-sm btn-outline-accent">
+                            {{-- <button class="btn btn-sm btn-outline-accent">
                                 <i class="material-icons">save</i> Save Draft
-                            </button>--}}
+                            </button> --}}
                             <button class="btn btn-sm btn-accent ml-auto">
                                 <i class="material-icons">file_copy</i> Publier
                             </button>
@@ -73,8 +80,10 @@
                             @if ($categories->isNotEmpty())
                                 @foreach ($categories as $categorie)
                                     <div class="custom-control custom-checkbox mb-1">
-                                        <input type="checkbox" class="custom-control-input" name="category_id" id="category1" checked>
-                                        <label class="custom-control-label" for="category1">{{ $categorie->titre }}</label>
+                                        <input type="checkbox" class="custom-control-input" name="category_id"
+                                            id="category1" checked>
+                                        <label class="custom-control-label"
+                                            for="category1">{{ $categorie->titre }}</label>
                                     </div>
                                 @endforeach
                             @else
