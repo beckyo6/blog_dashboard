@@ -13,7 +13,7 @@
                     <div class="d-flex flex-column m-auto">
                         <div class="stats-small__data text-center">
                             <span class="stats-small__label text-uppercase">Articles</span>
-                            <h6 class="stats-small__value count my-3">0</h6>
+                            <h6 class="stats-small__value count my-3">{{App\Models\Article::count()}}</h6>
                         </div>
                         <div class="stats-small__data">
                             <span class="text-center">total</span>
