@@ -7,31 +7,26 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-            @if ($articles->isNotEmpty())
-                @foreach ($articles as $article)
-                    <div class="card card-small card-post card-post--1">
-                        <div class="card-post__image" style="background-image: url('images/content-management/1.jpeg');">
-                            <a href="#" class="card-post__category badge badge-pill badge-dark">{{$article->catégorie}}</a>
-                            <div class="card-post__author d-flex">
-                                <a href="#" class="card-post__author-avatar card-post__author-avatar--small"
-                                    style="background-image: url('images/avatars/0.jpg');">Written by {{$article->name}}</a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a class="text-fiord-blue" href="#">{{$article->titre}}</a>
-                            </h5>
-                            <p class="card-text d-inline-block mb-3">{{$article->contenu}}</p>
-                            <span class="text-muted">{{$article->created_at}}</span>
-                        </div>
-                    </div>
-                @endforeach
-            @else
-                <div class="alert alert-info text-center" alt="alert">
-                     Aucune article existante
+        <div class="col-lg-4">
+            <div class="card card-small card-post mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Had denoting properly jointure which well books beyond</h5>
+                <p class="card-text text-muted"> In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer...</p>
+              </div>
+              <div class="card-footer border-top d-flex">
+                <div class="card-post__author d-flex">
+                  <a href="#" class="card-post__author-avatar card-post__author-avatar--small" style="background-image: url('images/avatars/1.jpg');">Written by James Khan</a>
+                  <div class="d-flex flex-column justify-content-center ml-3">
+                    <span class="card-post__author-name">James Khan</span>
+                    <small class="text-muted">21 March 2011</small>
+                  </div>
                 </div>
-            @endif
-        </div>
+                <div class="my-auto ml-auto">
+                  <a class="btn btn-sm btn-white" href="#">
+                    <i class="far fa-bookmark mr-1"></i> Bookmark </a>
+                </div>
+              </div>
+            </div>
+          </div>
     </div>
 @endsection
