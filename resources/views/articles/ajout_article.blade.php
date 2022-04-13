@@ -30,10 +30,10 @@
                         <li class="list-group-item p-3">
                             <span class="d-flex mb-2">
                                 <i class="material-icons mr-1">flag</i>
-                                <strong class="mr-1">Status:</strong> Draft
-                                <a class="ml-auto" href="#">Edit</a>
+                                <strong class="mr-1">Status:</strong> Article
+                                {{--<a class="ml-auto" href="#">Edit</a>--}}
                             </span>
-                            <span class="d-flex mb-2">
+                            {{--<span class="d-flex mb-2">
                                 <i class="material-icons mr-1">visibility</i>
                                 <strong class="mr-1">Visibility:</strong>
                                 <strong class="text-success">Public</strong>
@@ -48,13 +48,15 @@
                                 <i class="material-icons mr-1">score</i>
                                 <strong class="mr-1">Readability:</strong>
                                 <strong class="text-warning">Ok</strong>
-                            </span>
+                            </span>--}}
                         </li>
                         <li class="list-group-item d-flex px-3">
-                            <button class="btn btn-sm btn-outline-accent">
-                                <i class="material-icons">save</i> Save Draft</button>
+                            {{--<button class="btn btn-sm btn-outline-accent">
+                                <i class="material-icons">save</i> Save Draft
+                            </button>--}}
                             <button class="btn btn-sm btn-accent ml-auto">
-                                <i class="material-icons">file_copy</i> Publish</button>
+                                <i class="material-icons">file_copy</i> Publier
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -71,7 +73,7 @@
                             @if ($categories->isNotEmpty())
                                 @foreach ($categories as $categorie)
                                     <div class="custom-control custom-checkbox mb-1">
-                                        <input type="checkbox" class="custom-control-input" id="category1" checked>
+                                        <input type="checkbox" class="custom-control-input" name="category_id" id="category1" checked>
                                         <label class="custom-control-label" for="category1">{{ $categorie->titre }}</label>
                                     </div>
                                 @endforeach
