@@ -19,7 +19,8 @@
             <div class="card card-small mb-3">
                 <div class="card-body">
                     <form class="add-new-post">
-                        <input class="form-control form-control-lg mb-3" type="text" placeholder="Your Post Title">
+                        <input class="form-control form-control-lg mb-3" id="titre" name="titre" type="text"
+                            placeholder="le titre de votre article">
                         <div id="editor-container" class="add-new-post__editor mb-1"></div>
                     </form>
                 </div>
@@ -61,7 +62,7 @@
                             {{-- <button class="btn btn-sm btn-outline-accent">
                                 <i class="material-icons">save</i> Save Draft
                             </button> --}}
-                            <button class="btn btn-sm btn-accent ml-auto">
+                            <button class="btn btn-sm btn-accent ml-auto" onclick="publish()">
                                 <i class="material-icons">file_copy</i> Publier
                             </button>
                         </li>
@@ -98,4 +99,11 @@
             <!-- / Post Overview -->
         </div>
     </div>
+    @push('scripts')
+        <script>
+            function publish() {
+                console.log('value is ' + quill.getText());
+            }
+        </script>
+    @endpush
 @endsection
