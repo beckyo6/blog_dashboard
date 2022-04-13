@@ -20,6 +20,7 @@ class ArticleController extends Controller
             'articles.titre',
             'articles.image',
             'articles.contenu',
+            'articles.created_at',
             'categories.titre as categorie',
             'users.name'
         )->join('users', 'articles.user_id', 'users.id')
