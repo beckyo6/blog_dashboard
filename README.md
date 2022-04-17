@@ -1,5 +1,5 @@
 ## blog 
-<p> c'est un l'un de mes projets que j'ai initié pour parfaire mon apprentissage 
+<p> c'est un de mes projets que j'ai initié pour parfaire mes connaissances 
 dans la programmation back-end et front-end avec le framework laravel et bootstrap.</p>
 <br>
 <p> le blog a deux parties le dashboard et la partie cliente du blog </p>
