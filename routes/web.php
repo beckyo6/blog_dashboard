@@ -16,9 +16,7 @@ use App\Http\Controllers\CategorieController;
 |
 */
 Route::get('login', [AuthController::class, 'form_login'])->name('login');
-
 Route::get('/signin', [AuthController::class, 'signin']); //to remove
-
 Route::post('login', [AuthController::class, 'login'])->name('login.post');
 
 Route::middleware('auth')->group(function () {
@@ -28,23 +26,19 @@ Route::middleware('auth')->group(function () {
     Route::get('profil', [AuthController::class, 'getUser'])->name('profil');
 
     Route::get('/', function () {
-    return view('home');
+        return view('home');
     });
 
-    Route::get('categorie', [CategorieController::class, 'create'])->name('categorie');
-    Route::post('categorie', [CategorieController::class, 'store'])->name('categorie.post');
-
-    Route::get('categories', [CategorieController::class, 'index'])->name('categories.index');
-
-    Route::get('categorie/{id}/delete', [CategorieController::class, 'destroy'])->name('categorie.delete');
-
-    Route::get('categorie/{id}/edit', [CategorieController::class, 'edit'])->name('categorie.edit');
-    Route::post('categorie/{id}/update', [CategorieController::class, 'update'])->name('categorie.update');
+    /**
+     * Grouper toutes les ressources de categories,
+     * - Suppression utilise la methode DELETE categories/{id} au lieu de GET /categories/{id}/delete
+     * - Modification utilise la methode UPDATE categories/{id} au lieu de GET /categories/{id}/edit
+     */
+    Route::resource('categories', CategorieController::class);
 
     Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
 
     Route::get('article', [ArticleController::class, 'create'])->name('article');
     Route::post('article', [ArticleController::class, 'store'])->name('article.post');
-
 
 });
