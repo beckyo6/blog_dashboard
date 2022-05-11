@@ -24,8 +24,8 @@ class ArticleController extends Controller
             'categories.titre as categorie',
             'users.name'
         )->join('users', 'articles.user_id', 'users.id')
-        ->join('categories', 'articles.category_id', 'categories.id')
-        ->get();
+            ->join('categories', 'articles.category_id', 'categories.id')
+            ->get();
 
         return view('articles.liste_articles', compact('articles'));
     }
@@ -50,7 +50,25 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'titre' => 'required|max:255',
+            'contenu' => 'required',
+            // 'image' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        $article = new Article();
+        $article->titre = $request->titre;
+        $article->contenu = $request->contenu;
+        $article->image = '$request->image';
+        // $article->category_id = $request->category_id;
+        $article->category_id = 1;
+
+        $article->user_id = $request->user_id;
+        $article->save();
+
+        return true;
     }
 
     /**

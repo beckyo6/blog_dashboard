@@ -1,10 +1,9 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('styles/quill.snow.min.css') }}">
 @endpush
-@push('scripts')
-    <script src="{{ asset('scripts/quill.min.js') }}"></script>
+{{-- @push('scripts')
     <script src="{{ asset('scripts/app/app-blog-new-post.1.1.0.js') }}"></script>
-@endpush
+@endpush --}}
 @extends('templates.app')
 @section('content')
     <div class="page-header row no-gutters py-4">
@@ -21,7 +20,7 @@
                     <form class="add-new-post">
                         <input class="form-control form-control-lg mb-3" id="titre" name="titre" type="text"
                             placeholder="le titre de votre article">
-                        <div id="editor-container" class="add-new-post__editor mb-1"></div>
+                        <div id="editor" class="add-new-post__editor mb-1"></div>
                     </form>
                 </div>
             </div>
@@ -39,29 +38,9 @@
                             <span class="d-flex mb-2">
                                 <i class="material-icons mr-1">flag</i>
                                 <strong class="mr-1">Status:</strong> Article
-                                {{-- <a class="ml-auto" href="#">Edit</a> --}}
                             </span>
-                            {{-- <span class="d-flex mb-2">
-                                <i class="material-icons mr-1">visibility</i>
-                                <strong class="mr-1">Visibility:</strong>
-                                <strong class="text-success">Public</strong>
-                                <a class="ml-auto" href="#">Edit</a>
-                            </span>
-                            <span class="d-flex mb-2">
-                                <i class="material-icons mr-1">calendar_today</i>
-                                <strong class="mr-1">Schedule:</strong> Now
-                                <a class="ml-auto" href="#">Edit</a>
-                            </span>
-                            <span class="d-flex">
-                                <i class="material-icons mr-1">score</i>
-                                <strong class="mr-1">Readability:</strong>
-                                <strong class="text-warning">Ok</strong>
-                            </span> --}}
                         </li>
                         <li class="list-group-item d-flex px-3">
-                            {{-- <button class="btn btn-sm btn-outline-accent">
-                                <i class="material-icons">save</i> Save Draft
-                            </button> --}}
                             <button class="btn btn-sm btn-accent ml-auto" onclick="publish()">
                                 <i class="material-icons">file_copy</i> Publier
                             </button>
@@ -94,15 +73,95 @@
                             @endif
                         </li>
                     </ul>
+
+                    {{-- test results --}}
+                    <div>
+                        {!! '<p id="preview"></p>' !!}
+                    </div>
                 </div>
             </div>
             <!-- / Post Overview -->
         </div>
     </div>
     @push('scripts')
+        <!-- Include the Quill library -->
+        <script src="{{ asset('scripts/quill.min.js') }}"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <!-- Initialize Quill editor -->
         <script>
+            var toolbarOptions = [
+                [{
+                    'header': [1, 2, 3, 4, 5, false]
+                }],
+                ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+                ['blockquote', 'code-block'],
+                [{
+                    'header': 1
+                }, {
+                    'header': 2
+                }], // custom button values
+                [{
+                    'list': 'ordered'
+                }, {
+                    'list': 'bullet'
+                }],
+                [{
+                    'script': 'sub'
+                }, {
+                    'script': 'super'
+                }], // superscript/subscript
+                [{
+                    'indent': '-1'
+                }, {
+                    'indent': '+1'
+                }], // outdent/indent        // remove formatting button
+            ];
+            var quill = new Quill('#editor', {
+                modules: {
+                    toolbar: toolbarOptions
+                },
+                placeholder: 'Les mots peuvent être comme des rayons X si vous les utilisez correctement...',
+                theme: 'snow'
+            });
+
             function publish() {
-                console.log('value is ' + quill.getText());
+                var titre = document.getElementById('titre').value;
+                var content = quill.root.innerHTML;
+
+                var category_id = document.getElementsByName('category_id');
+                var category_id_array = [];
+                for (var i = 0; i < category_id.length; i++) {
+                    if (category_id[i].checked) {
+                        category_id_array.push(category_id[i].value);
+                    }
+                }
+
+                var data = {
+                    titre: titre,
+                    contenu: content,
+                    category_id: category_id_array,
+                    user_id: {{ Auth::user()->id }}
+                };
+
+                // TODO: check if all fields are filled
+                if (titre != '' && content != '' && category_id_array.length > 0) {
+                    axios.post('/article', data)
+                        .then(function(response) {
+                            console.log(response);
+                            if (response.data == true) {
+                                alert('Article publié');
+                                window.location.href = '/articles';
+                            } else {
+                                alert('Erreur');
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                } else {
+                    alert('Veuillez remplir tous les champs');
+                }
             }
         </script>
     @endpush
