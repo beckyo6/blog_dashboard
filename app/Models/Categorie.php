@@ -18,4 +18,9 @@ class Categorie extends Model
         'titre',
         'user_id'
     ];
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
 }

@@ -5,7 +5,7 @@
              <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
                  <div class="d-table m-auto">
                      <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;"
-                         src="images/shards-dashboards-logo.svg" alt="Shards Dashboard">
+                         src="{{ asset('images/shards-dashboards-logo.svg') }}" alt="Blog logo">
                      <span class="d-none d-md-inline ml-1">Blog Dashboard</span>
                  </div>
              </a>
@@ -34,28 +34,16 @@
                  </a>
              </li>
              <li class="nav-item">
-                <a class="nav-link " href="{{ route('categories.index')}}">
-                    <i class="material-icons">vertical_split</i>
-                    <span>Catégories</span>
-                </a>
-            </li>
-            <li class="nav-item">
-               <a class="nav-link " href="{{ route('categorie')}}">
-                    <i class="material-icons">note_add</i>
-                    <span>Ajouter une Catégorie</span>
-               </a>
-            </li>
-             <li class="nav-item">
-                 <a class="nav-link " href="{{ route('articles.index')}}">
+                 <a class="nav-link " href="{{ route('categories.index') }}">
                      <i class="material-icons">vertical_split</i>
-                     <span>Articles</span>
+                     <span>Catégories</span>
                  </a>
              </li>
              <li class="nav-item">
-                <a class="nav-link " href="{{ route('article')}}">
-                     <i class="material-icons">note_add</i>
-                     <span>Ajouter un article</span>
-                </a>
+                 <a class="nav-link " href="{{ route('articles.index') }}">
+                     <i class="material-icons">vertical_split</i>
+                     <span>Articles</span>
+                 </a>
              </li>
          </ul>
      </div>

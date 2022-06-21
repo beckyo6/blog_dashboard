@@ -16,19 +16,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::select(
-            'articles.id',
-            'articles.titre',
-            'articles.image',
-            'articles.contenu',
-            'articles.created_at',
-            'categories.titre as categorie',
-            'users.name'
-        )->join('users', 'articles.user_id', 'users.id')
-            ->join('categories', 'articles.category_id', 'categories.id')
-            ->get();
-
-        return view('articles.liste_articles', compact('articles'));
+        $articles = Article::all();
+        return view('articles.index', compact('articles'));
     }
 
     /**
@@ -38,9 +27,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $categories = Categorie::all();
-
-        return view('articles.ajout_article', compact('categories'));
+        return view('articles.create');
     }
 
     /**
@@ -52,70 +39,21 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'titre' => 'required|max:255',
-            'contenu' => 'required',
-            'category_id' => 'required',
-            'user_id' => 'required'
+            'titre' => 'required|max:100',
+            'category_id' => 'required|exists:categories,id',
+            'cover' => 'required|file'
         ]);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_name = time() . '.' . $image->getClientOriginalExtension();
+        $article = new Article($request->except(['_token', 'cover']));
+        if ($cover = $request->file('cover')) {
+            $image_name = time() . '.' . $cover->getClientOriginalExtension();
             $destinationPath = public_path('/images');
-            $image->move($destinationPath, $image_name);
-        } else {
-            $image_name = 'noimage.jpg';
+            $cover->move($destinationPath, $image_name);
+            $article->image = '/images/' . $image_name;
         }
-
-        $article = new Article();
-        $article->titre = $request->titre;
-        $article->contenu = $request->contenu;
-        $article->image = '$request->image';
-        // $article->category_id = $request->category_id;
-
-        // TODO: create article_has_category table
-
-        $article->category_id = 1;
-
-        $article->user_id = $request->user_id;
         $article->save();
 
-        return true;
-    }
-
-    public function saveImageCover(Request $request)
-    {
-        $image = $request->file('file');
-        $image_name = time() . '.' . $image->getClientOriginalExtension();
-        $destinationPath = public_path('/images');
-        $image->move($destinationPath, $image_name);
-
-        return response()->json(['success' => $image_name]);
-    }
-
-    public function destroyImageCover(Request $request)
-    {
-        $image_name = $request->imageName;
-        $image_path = public_path('/images/' . $image_name);
-        if (file_exists($image_path)) {
-            Storage::delete($image_path);
-        }
-        return false;
-        // return redirect()->back()    
-        //     ->with('success', $image_name . ' has been deleted');
-    }
-
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Article $article)
-    {
-        //
+        return redirect()->route('article.edit', $article->id);
     }
 
     /**
@@ -124,9 +62,10 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit($id)
     {
-        //
+        $article = Article::find($id);
+        return view('articles.editor', compact('article'));
     }
 
     /**
@@ -136,9 +75,16 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'contenu' => 'required',
+        ]);
+
+        $article = Article::findOrFail($id);
+        $article->contenu = $request->contenu;
+        $article->isOnline = true;
+        return $article->update();
     }
 
     /**
