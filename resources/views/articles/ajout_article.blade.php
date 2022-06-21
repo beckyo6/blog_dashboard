@@ -1,9 +1,8 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('styles/quill.snow.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.0/min/dropzone.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.0/dropzone.js"></script>
 @endpush
-{{-- @push('scripts')
-    <script src="{{ asset('scripts/app/app-blog-new-post.1.1.0.js') }}"></script>
-@endpush --}}
 @extends('templates.app')
 @section('content')
     <div class="page-header row no-gutters py-4">
@@ -17,7 +16,12 @@
             <!-- Add New Post Form -->
             <div class="card card-small mb-3">
                 <div class="card-body">
+                    <form method="post" action="{{ route('article.cover') }}" enctype="multipart/form-data"
+                        class="dropzone" id="dropzone">
+                        @csrf
+                    </form>
                     <form class="add-new-post">
+                        {{-- TODO: get image of article --}}
                         <input class="form-control form-control-lg mb-3" id="titre" name="titre" type="text"
                             placeholder="le titre de votre article">
                         <div id="editor" class="add-new-post__editor mb-1"></div>
@@ -126,6 +130,8 @@
             });
 
             function publish() {
+                // TODO: get image of article
+                // TODO: optimise 
                 var titre = document.getElementById('titre').value;
                 var content = quill.root.innerHTML;
 
@@ -163,6 +169,44 @@
                     alert('Veuillez remplir tous les champs');
                 }
             }
+        </script>
+        <script type="text/javascript">
+            Dropzone.options.dropzone = {
+                maxFilesize: 10,
+                resizeQuality: 1.0,
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                addRemoveLinks: true,
+                timeout: 60000,
+                removedfile: function(file) {
+                    var name = file.upload.filename;
+                    $.ajax({
+                        // headers: {
+                        //     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        // },
+                        type: 'POST',
+                        url: '{{ url('cover/destroy') }}',
+                        data: {
+                            imageName: name,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(data) {
+                            console.log("File has been successfully removed!!");
+                        },
+                        error: function(e) {
+                            console.log(e);
+                        }
+                    });
+                    var fileRef;
+                    return (fileRef = file.previewElement) != null ?
+                        fileRef.parentNode.removeChild(file.previewElement) : void 0;
+                },
+                success: function(file, response) {
+                    console.log(response);
+                },
+                error: function(file, response) {
+                    return false;
+                }
+            };
         </script>
     @endpush
 @endsection

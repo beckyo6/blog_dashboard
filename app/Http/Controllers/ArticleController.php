@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -53,16 +54,27 @@ class ArticleController extends Controller
         $request->validate([
             'titre' => 'required|max:255',
             'contenu' => 'required',
-            // 'image' => 'required',
             'category_id' => 'required',
             'user_id' => 'required'
         ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $image_name);
+        } else {
+            $image_name = 'noimage.jpg';
+        }
 
         $article = new Article();
         $article->titre = $request->titre;
         $article->contenu = $request->contenu;
         $article->image = '$request->image';
         // $article->category_id = $request->category_id;
+
+        // TODO: create article_has_category table
+
         $article->category_id = 1;
 
         $article->user_id = $request->user_id;
@@ -70,6 +82,30 @@ class ArticleController extends Controller
 
         return true;
     }
+
+    public function saveImageCover(Request $request)
+    {
+        $image = $request->file('file');
+        $image_name = time() . '.' . $image->getClientOriginalExtension();
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $image_name);
+
+        return response()->json(['success' => $image_name]);
+    }
+
+    public function destroyImageCover(Request $request)
+    {
+        $image_name = $request->imageName;
+        $image_path = public_path('/images/' . $image_name);
+        if (file_exists($image_path)) {
+            Storage::delete($image_path);
+        }
+        return false;
+        // return redirect()->back()    
+        //     ->with('success', $image_name . ' has been deleted');
+    }
+
+
 
     /**
      * Display the specified resource.

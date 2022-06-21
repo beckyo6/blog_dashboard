@@ -15,6 +15,7 @@ use App\Http\Controllers\CategorieController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('login', [AuthController::class, 'form_login'])->name('login');
 
 Route::get('/signin', [AuthController::class, 'signin']); //to remove
@@ -28,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profil', [AuthController::class, 'getUser'])->name('profil');
 
     Route::get('/', function () {
-    return view('home');
+        return view('home');
     });
 
     Route::get('categorie', [CategorieController::class, 'create'])->name('categorie');
@@ -46,5 +47,6 @@ Route::middleware('auth')->group(function () {
     Route::get('article', [ArticleController::class, 'create'])->name('article');
     Route::post('article', [ArticleController::class, 'store'])->name('article.post');
 
-
+    Route::post('cover/create', [ArticleController::class, 'saveImageCover'])->name('article.cover');
+    Route::post('cover/destroy', [ArticleController::class, 'destroyImageCover'])->name('article.destroy');
 });
