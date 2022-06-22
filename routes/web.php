@@ -15,6 +15,7 @@ use App\Http\Controllers\CategorieController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('login', [AuthController::class, 'form_login'])->name('login');
 
 Route::get('/signin', [AuthController::class, 'signin']); //to remove
@@ -28,10 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::get('profil', [AuthController::class, 'getUser'])->name('profil');
 
     Route::get('/', function () {
-    return view('home');
+        return view('home');
     });
 
-    Route::get('categorie', [CategorieController::class, 'create'])->name('categorie');
+    Route::get('categorie', [CategorieController::class, 'create'])->name('categorie.create');
     Route::post('categorie', [CategorieController::class, 'store'])->name('categorie.post');
 
     Route::get('categories', [CategorieController::class, 'index'])->name('categories.index');
@@ -42,9 +43,12 @@ Route::middleware('auth')->group(function () {
     Route::post('categorie/{id}/update', [CategorieController::class, 'update'])->name('categorie.update');
 
     Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
+    Route::get('article/{id}', [ArticleController::class, 'show'])->name('article.show');
+    Route::get('article', [ArticleController::class, 'create'])->name('article.create');
+    Route::post('article', [ArticleController::class, 'store'])->name('article.store');
+    Route::get('article/{id}/edit', [ArticleController::class, 'edit'])->name('article.edit');
+    Route::post('article/{id}/update', [ArticleController::class, 'update'])->name('article.update');
 
-    Route::get('article', [ArticleController::class, 'create'])->name('article');
-    Route::post('article', [ArticleController::class, 'store'])->name('article.post');
-
-
+    Route::post('cover/create', [ArticleController::class, 'saveImageCover'])->name('article.cover');
+    Route::post('cover/destroy', [ArticleController::class, 'destroyImageCover'])->name('article.destroy');
 });

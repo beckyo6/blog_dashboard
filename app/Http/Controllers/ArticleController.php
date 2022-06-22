@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -15,19 +16,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::select(
-            'articles.id',
-            'articles.titre',
-            'articles.image',
-            'articles.contenu',
-            'articles.created_at',
-            'categories.titre as categorie',
-            'users.name'
-        )->join('users', 'articles.user_id', 'users.id')
-        ->join('categories', 'articles.category_id', 'categories.id')
-        ->get();
-
-        return view('articles.liste_articles', compact('articles'));
+        $articles = Article::all();
+        return view('articles.index', compact('articles'));
     }
 
     /**
@@ -37,9 +27,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $categories = Categorie::all();
-
-        return view('articles.ajout_article', compact('categories'));
+        return view('articles.create');
     }
 
     /**
@@ -50,18 +38,22 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'titre' => 'required|max:100',
+            'category_id' => 'required|exists:categories,id',
+            'cover' => 'required|file'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Article $article)
-    {
-        //
+        $article = new Article($request->except(['_token', 'cover']));
+        if ($cover = $request->file('cover')) {
+            $image_name = time() . '.' . $cover->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $cover->move($destinationPath, $image_name);
+            $article->image = '/images/' . $image_name;
+        }
+        $article->save();
+
+        return redirect()->route('article.edit', $article->id);
     }
 
     /**
@@ -70,9 +62,10 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit($id)
     {
-        //
+        $article = Article::find($id);
+        return view('articles.editor', compact('article'));
     }
 
     /**
@@ -82,9 +75,16 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'contenu' => 'required',
+        ]);
+
+        $article = Article::findOrFail($id);
+        $article->contenu = $request->contenu;
+        $article->isOnline = true;
+        return $article->update();
     }
 
     /**
